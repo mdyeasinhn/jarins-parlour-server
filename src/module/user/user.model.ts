@@ -1,10 +1,16 @@
 import { model, Schema } from "mongoose";
-
-const userSchema = new Schema({
+import { TUser } from "./user.interface";
+import bcrypt from 'bcrypt'
+import config from "../../config";
+const userSchema = new Schema <TUser>({
     id: {
         type: String,
         required: true,
         unique: true,
+    },
+    name: {
+        type: String,
+        required: true,
     },
     password: {
         type: String,
@@ -36,6 +42,34 @@ const userSchema = new Schema({
         timestamps: true,
     },
 );
+// Before saving user data into the database, run this middleware
+userSchema.pre('save', async function (next) {
+  // 'this' refers to the current user object being saved
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;    
+
+  // If the password field is newly created or updated, hash it
+  if (user.isModified('password')) {
+    // Hash the password using bcrypt 
+    user.password = await bcrypt.hash(
+      user.password, 
+      Number(config.bcrypt_salt_rounds) 
+    );
+  }
+
+  // Move to the next step (continue saving)
+  next();
+});
+
+
+// After the user is saved in the database, run this middleware
+userSchema.post('save', function (doc, next) {
+  // For security reasons, remove the password from the response object
+  doc.password = '';
+
+  // Move to the next step 
+  next();
+});
 
 
 const User = model("User", userSchema)
