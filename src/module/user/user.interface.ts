@@ -3,6 +3,7 @@ export interface TUser {
     name: string;
     email: string;
     password: string;
+    phone: string;
     needsPasswordChange: boolean;
     passwordChangeAt?: Date;
     role: 'admin' | 'customer';

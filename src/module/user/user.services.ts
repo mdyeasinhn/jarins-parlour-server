@@ -7,4 +7,10 @@ const createUser = async (payload: TUser) => {
 }
 export const userServices = {
   createUser,
+//   getUsers,
+//   getSingleUser,
+//   updateUser,
+//   deleteUser,
+//   blockUser,
+//   retrieveUserProfile
 }
