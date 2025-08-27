@@ -4,6 +4,7 @@ export interface TUser {
     email: string;
     password: string;
     phone: string;
+    photo?: string;
     needsPasswordChange: boolean;
     passwordChangeAt?: Date;
     role: 'admin' | 'customer';

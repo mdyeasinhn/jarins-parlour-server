@@ -11,6 +11,7 @@ const userSchema = new Schema <TUser>({
     email: {
         type: String,
         required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -20,6 +21,9 @@ const userSchema = new Schema <TUser>({
     phone: {
         type: String,
         required: true,
+    },
+    photo: {
+        type: String,
     },
     needsPasswordChange: {
         type: Boolean,

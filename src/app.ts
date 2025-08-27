@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import express, { Request, Response } from "express";
 import cors from "cors";
 import router from "./routes";
+import { globalErrorHandler } from './middleware/globalErrorHandler';
 const app = express();
 
 //parsers
@@ -20,7 +21,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Global Error Handler
-// app.use(globalErrorHandler)
+app.use(globalErrorHandler)
 
 app.use('*', (req: Request, res: Response) => {
     res.status(404).json({

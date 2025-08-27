@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
+import { ZodError } from 'zod'
 
-export const handleZodError = (err: any, res: Response) => {
-  const issues = err.errors.map((val: any) => {
-    return { path: val.path.join(' '), message: val.message }
+export const handleZodError = (err: ZodError, res: Response) => {
+  const issues = err.issues.map((val) => {
+    return { path: val.path.join('.'), message: val.message }
   })
 
   res.status(StatusCodes.BAD_REQUEST).json({
     success: false,
-    message: err.message,
-    issues: issues,
-    error: err,
+    message: 'Validation Error',
+    issues,
   })
 }
