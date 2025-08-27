@@ -2,11 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express'
 import mongoose from 'mongoose'
-import { handleZodError } from '../helpers/handleZodError'
-import { handleCastError } from '../helpers/handleCastError'
-import { handleValidationError } from '../helpers/handleValidationError'
-import { handleDuplicateError } from '../helpers/handleDuplicateError'
-import { handleGenericError } from '../helpers/handleGenericError'
+import { handleZodError } from '../error/handleZodError'
+import handleCastError from '../error/handleCastError'
+import handleValidationError from '../error/handleValidationError'
+import handleDuplicateError from '../error/handleDuplicate'
+import { handleGenericError } from '../error/handleGenericError'
+import AppError from '../error/appError'
+
 
 
 export const globalErrorHandler = (
@@ -18,12 +20,19 @@ export const globalErrorHandler = (
   if (err.name && err.name === 'ZodError') {
     handleZodError(err, res)
   } else if (err instanceof mongoose.Error.CastError) {
-    handleCastError(err, res)
+    handleCastError(err)
   } else if (err instanceof mongoose.Error.ValidationError) {
-    handleValidationError(err, res)
+    handleValidationError(err)
   } else if (err?.code && err?.code === 11000) {
-    handleDuplicateError(err, res)
+    handleDuplicateError(err)
   } else if (err instanceof Error) {
     handleGenericError(err, res)
+  } else if (err instanceof AppError) {
+    res.status(err.statusCode).json({
+      success: false,
+      statusCode: err.statusCode,
+      message: err.message,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    })
   }
 }
