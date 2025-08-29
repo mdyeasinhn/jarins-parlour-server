@@ -3,6 +3,7 @@ import catchAsync from "../../utils/catchAsync"
 import sendResponse from "../../utils/sendResponse"
 import { userServices } from "./user.services"
 
+//Create a user
 const createUser = catchAsync(async (req, res) => {
   const payload = req.body;
   const result = await userServices.createUser(payload)
@@ -15,6 +16,7 @@ const createUser = catchAsync(async (req, res) => {
   })
 });
 
+//Get all user 
 const getUsers = catchAsync(async (req, res) => {
   const result = await userServices.getUsers()
   sendResponse(res, {
@@ -24,7 +26,19 @@ const getUsers = catchAsync(async (req, res) => {
   })
 })
 
+// get user by email
+const retrieveUserProfile = catchAsync(async (req, res) => {
+  const { email } = req.params;
+  const result = await userServices.retrieveUserProfile(email);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: 'User profile retrieved successfully',
+    data: result,
+  })
+})
+
 export const userControllers = {
-    createUser,
-    getUsers,
+  createUser,
+  getUsers,
+  retrieveUserProfile
 }
