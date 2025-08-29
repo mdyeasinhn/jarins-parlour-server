@@ -5,12 +5,18 @@ const createUser = async (payload: TUser) => {
   const result = await User.create(payload)
   return result
 }
+
+const getUsers = async () => {
+  const result = await User.find()
+  return result
+}
+
 export const userServices = {
   createUser,
-//   getUsers,
-//   getSingleUser,
-//   updateUser,
-//   deleteUser,
-//   blockUser,
-//   retrieveUserProfile
+  getUsers,
+  //   getSingleUser,
+  //   updateUser,
+  //   deleteUser,
+  //   blockUser,
+  //   retrieveUserProfile
 }
