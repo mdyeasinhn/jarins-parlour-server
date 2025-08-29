@@ -5,9 +5,9 @@ import mongoose from 'mongoose'
 import { handleZodError } from '../error/handleZodError'
 import handleCastError from '../error/handleCastError'
 import handleValidationError from '../error/handleValidationError'
-import handleDuplicateError from '../error/handleDuplicate'
 import { handleGenericError } from '../error/handleGenericError'
 import AppError from '../error/appError'
+import { handleDuplicateError } from '../error/handleDuplicate'
 
 
 
@@ -24,7 +24,7 @@ export const globalErrorHandler = (
   } else if (err instanceof mongoose.Error.ValidationError) {
     handleValidationError(err)
   } else if (err?.code && err?.code === 11000) {
-    handleDuplicateError(err)
+    handleDuplicateError(err, res)
   } else if (err instanceof Error) {
     handleGenericError(err, res)
   } else if (err instanceof AppError) {

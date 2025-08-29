@@ -1,27 +1,16 @@
-import { TErrorSources, TGenericErrorRespone } from '../interface/error';
+import { Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleDuplicateError = (err: any): TGenericErrorRespone => {
-  // Extract value within double quotes using regex
-  const match = err.message.match(/"([^"]*)"/);
+interface MongoDuplicateError extends Error {
+  code: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  keyValue?: Record<string, any>;
+}
 
-  // The extracted value will be in the first capturing group
-  const extractedMessage = match && match[1];
-
-  const errorSources: TErrorSources = [
-    {
-      path: '',
-      message: `${extractedMessage} is already exists`,
-    },
-  ];
-
-  const statusCode = 400;
-
-  return {
-    statusCode,
-    message: 'Invalid ID',
-    errorSources,
-  };
+export const handleDuplicateError = (err: MongoDuplicateError, res: Response) => {
+  const field = err.keyValue ? Object.keys(err.keyValue)[0] : 'Field';
+  res.status(StatusCodes.CONFLICT).json({
+    success: false,
+    message: `${field} already exists`,
+  });
 };
-
-export default handleDuplicateError;
