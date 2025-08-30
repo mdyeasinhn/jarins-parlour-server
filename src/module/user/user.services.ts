@@ -19,14 +19,21 @@ const retrieveUserProfile = async (email: string) => {
   return result;
 }
 
+//Update user info 
+const updateUserInfo = async (id: string, data: TUser) => {
+  const result = await User.findOneAndUpdate({ _id: id }, data, {
+    new: true
+  })
+  return result
+}
 
 
 export const userServices = {
   createUser,
   getUsers,
-  retrieveUserProfile
+  retrieveUserProfile,
+  updateUserInfo,
   //   getSingleUser,
-  //   updateUser,
   //   deleteUser,
   //   blockUser,
 }

@@ -1,21 +1,36 @@
 import { z } from "zod";
 
-export const userValidationSchema = z.object({
+const crateUserValidationSchema = z.object({
     name: z.string({
-        error: "Name is required",
+        error: () => ({ message: "Name is required" }),
     }).min(2, "Name must be at least 2 characters long"),
+
     email: z.string({
-        error: "Email is required",
+        error: () => ({ message: "Email is required" }),
     }).email("Invalid email address"),
+
     password: z.string({
-        error: "Password is required",
+        error: () => ({ message: "Password is required" }),
     }).min(6, "Password must be at least 6 characters long"),
+
     phone: z.string({
-        error: "Phone number is required",
+        error: () => ({ message: "Phone number is required" }),
     }).regex(/^[0-9]{10,15}$/, "Phone must be 10–15 digits"),
+
     photo: z.string().url("Photo must be a valid URL").optional(),
 });
 
+// ✅ Update schema (all fields optional)
+const updateUserValidation = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters long").optional(),
+    password: z.string().min(6, "Password must be at least 6 characters long").optional(),
+    phone: z.string().regex(/^[0-9]{10,15}$/, "Phone must be 10–15 digits").optional(),
+    photo: z.string().url("Photo must be a valid URL").optional(),
+
+    email: z.string().max(0, "Email cannot be updated").optional(),
+});
+
 export const userValidation = {
-    userValidationSchema,
+    crateUserValidationSchema,
+    updateUserValidation,
 };

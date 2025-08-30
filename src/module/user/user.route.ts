@@ -8,12 +8,17 @@ const userRoutes = Router();
 userRoutes.get('/', userControllers.getUsers);
 
 //Get a user by eamil 
-userRoutes.get('/:email', userControllers.retrieveUserProfile)
+userRoutes.get('/:email', userControllers.retrieveUserProfile);
+
+//Update user info 
+userRoutes.put('/:userId',
+  validateRequest(userValidation.updateUserValidation),
+  userControllers.updateUserInfo);
 
 //Create a user
 userRoutes.post(
   '/create-user',
-  validateRequest(userValidation.userValidationSchema),
+  validateRequest(userValidation.crateUserValidationSchema),
   userControllers.createUser
 );
 
