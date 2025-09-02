@@ -14,7 +14,7 @@ userRoutes.get('/:email', userControllers.retrieveUserProfile);
 userRoutes.put('/:userId',
   validateRequest(userValidation.updateUserValidation),
   userControllers.updateUserInfo);
-
+userRoutes.patch('/block/:userId',  userControllers.blockUser);
 //Create a user
 userRoutes.post(
   '/create-user',

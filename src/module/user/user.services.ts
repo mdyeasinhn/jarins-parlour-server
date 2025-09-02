@@ -26,14 +26,30 @@ const updateUserInfo = async (id: string, data: TUser) => {
   })
   return result
 }
+// inActive & block user
+const blockUser = async (userId: string) => {
+  const user = await User.findById(userId);
 
+  if(!user) {
+    throw new Error('User not found');
+  }
+
+  if(user.status == "blocked"){
+    throw new Error('User is already blocked');
+  }
+
+  user.status = "blocked";
+  await user.save();
+
+  return user
+}
 
 export const userServices = {
   createUser,
   getUsers,
   retrieveUserProfile,
   updateUserInfo,
+  blockUser,
   //   getSingleUser,
   //   deleteUser,
-  //   blockUser,
 }
