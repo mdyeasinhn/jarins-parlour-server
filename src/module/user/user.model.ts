@@ -34,13 +34,13 @@ const userSchema = new Schema <TUser>({
     },
     role: {
         type: String,
-        enum: ['customer', 'admin'],
-        default: "customer"
+        enum: ['CUSTOMER', 'ADMIN'],
+        default: "CUSTOMER"
     },
     status: {
         type: String,
-        enum: ['active', 'blocked'],
-        default: 'active',
+        enum: ['ACTIVE', 'BLOCKED'],
+        default: 'ACTIVE',
     },
     isDeleted: {
         type: Boolean,

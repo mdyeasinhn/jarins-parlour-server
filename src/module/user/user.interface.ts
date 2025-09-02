@@ -7,8 +7,8 @@ export interface TUser {
     photo?: string;
     needsPasswordChange: boolean;
     passwordChangeAt?: Date;
-    role: 'admin' | 'customer';
-    status: 'active' | 'blocked';
+    role: 'ADMIN' | 'CUSTOMER';
+    status: 'ACTIVE' | 'BLOCKED';
     isDeleted: boolean;
 }
 

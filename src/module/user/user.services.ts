@@ -1,6 +1,8 @@
+import mongoose from "mongoose";
+import AppError from "../../error/appError";
 import { TUser } from "./user.interface"
 import User from "./user.model"
-
+import httpStatus from 'http-status-codes';
 //Create a user 
 const createUser = async (payload: TUser) => {
   const result = await User.create(payload)
@@ -26,19 +28,23 @@ const updateUserInfo = async (id: string, data: TUser) => {
   })
   return result
 }
-// inActive & block user
+// inACTIVE & block user
 const blockUser = async (userId: string) => {
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Invalid user ID!");
+  }
   const user = await User.findById(userId);
 
-  if(!user) {
-    throw new Error('User not found');
+
+  if (!user) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'User not found!');
   }
 
-  if(user.status == "blocked"){
-    throw new Error('User is already blocked');
+  if (user.status == "BLOCKED") {
+    throw new Error('User is already BLOCKED!');
   }
 
-  user.status = "blocked";
+  user.status = "BLOCKED";
   await user.save();
 
   return user

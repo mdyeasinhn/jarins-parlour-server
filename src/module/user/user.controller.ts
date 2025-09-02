@@ -48,7 +48,7 @@ const updateUserInfo = catchAsync(async (req, res) => {
   })
 });
 
-// inActive & block user
+// inACTIVE & block user
 const blockUser = catchAsync(async (req, res) => {
   const userId = req.params.userId;
   await userServices.blockUser(userId);
@@ -56,7 +56,7 @@ const blockUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
-    message: 'User blocked successfully',
+    message: 'User BLOCKED successfully',
   })
 });
 
