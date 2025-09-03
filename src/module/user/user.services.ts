@@ -23,6 +23,11 @@ const retrieveUserProfile = async (email: string) => {
 
 //Update user info 
 const updateUserInfo = async (id: string, data: TUser) => {
+  // Check if the provided ID is a valid MongoDB ObjectId
+   if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Invalid user ID!");
+  };
+    // Find the user by ID and update with the new data
   const result = await User.findOneAndUpdate({ _id: id }, data, {
     new: true
   })
@@ -30,11 +35,11 @@ const updateUserInfo = async (id: string, data: TUser) => {
 }
 // inACTIVE & block user
 const blockUser = async (userId: string) => {
+  // Check if the provided ID is a valid MongoDB ObjectId
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw new AppError(httpStatus.BAD_REQUEST, "Invalid user ID!");
   }
   const user = await User.findById(userId);
-
 
   if (!user) {
     throw new AppError(httpStatus.BAD_REQUEST, 'User not found!');
