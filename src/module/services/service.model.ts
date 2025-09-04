@@ -47,4 +47,4 @@ const serviceSchema = new Schema<IService>(
   }
 );
 
-export const ServiceModel = model<IService>("Service", serviceSchema);
+export const Service = model<IService>("Service", serviceSchema);
