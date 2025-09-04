@@ -4,7 +4,7 @@ import { TLoginUser } from "./auth.interface";
 import httpStatus from "http-status-codes";
 import config from "../../config";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 
 const loginUser = async (payload: TLoginUser) => {
   // 1. Find user by email and include password
@@ -48,6 +48,45 @@ const loginUser = async (payload: TLoginUser) => {
   return { token, verifiedUser };
 };
 
+const changePassword = async(userData: JwtPayload, payload: { oldPassword: string, newPassword: string }) => {
+  // 1. Check if the user exists and select password explicitly
+const user = await User.findOne({ email: userData.email }).select("+password");
+
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "The user is not found !")
+  };
+
+  // 2. Check if user is blocked
+  if (user.status === "BLOCKED") {
+    throw new AppError(httpStatus.FORBIDDEN, "User is blocked!");
+  }
+
+  
+  // 3. Check password
+  const isPasswordMatch = await bcrypt.compare(payload.oldPassword, user.password);
+  if (!isPasswordMatch) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Invalid credentials!");
+  }
+
+  // 4. Hash new password
+  const newHashedPassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.bcrypt_salt_rounds),
+  );
+  // 5. Update password
+  await User.findOneAndUpdate({
+    id: userData.userId,
+    role: userData.role,
+  },{
+    password : newHashedPassword,
+    needsPasswordChange : false,
+    passwordChangeAt: new Date(),
+  })
+return null;
+};
+
 export const authServices = {
   loginUser,
+  changePassword
 };
