@@ -11,7 +11,7 @@ const createUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.CREATED,
-    message: 'User is created successfully',
+    message: 'User is created successfully!',
     data: result,
   })
 });
@@ -21,7 +21,7 @@ const getUsers = catchAsync(async (req, res) => {
   const result = await userServices.getUsers()
   sendResponse(res, {
     statusCode: StatusCodes.OK,
-    message: 'Users getting succesfully',
+    message: 'Users retrieved succesfully!',
     data: result,
   })
 })
@@ -32,7 +32,7 @@ const retrieveUserProfile = catchAsync(async (req, res) => {
   const result = await userServices.retrieveUserProfile(email);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
-    message: 'User profile retrieved successfully',
+    message: 'User profile retrieved successfully!',
     data: result,
   })
 });
@@ -43,7 +43,7 @@ const updateUserInfo = catchAsync(async (req, res) => {
   const result = await userServices.updateUserInfo(userId, body);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
-    message: 'User updated succesfully',
+    message: 'User updated succesfully!',
     data: result,
   })
 });
