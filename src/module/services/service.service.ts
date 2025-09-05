@@ -19,18 +19,27 @@ const getAllServices = async () => {
 
 // update service data
 const updateService = async (id: string, data: IService) => {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Invalid user ID!");
+    const user = await Service.findOne({ _id: id });
+    if(!user) {
+      throw new  AppError(httpStatus.NOT_FOUND, "Service not found!")
     }
     const result = await Service.findOneAndUpdate({ _id: id }, data,
         { new: true, runValidators: true });
     return result;
 };
 
-
+const deleteService = async (id: string) => {
+    const user = await Service.findOne({ _id: id });
+    if(!user) {
+      throw new  AppError(httpStatus.NOT_FOUND, "Service not found!")
+    }
+    const result = Service.deleteOne({ _id: id });
+    return result
+}
 
 export const serviceService = {
     createService,
     getAllServices,
-    updateService
+    updateService,
+    deleteService
 }

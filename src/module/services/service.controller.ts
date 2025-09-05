@@ -28,9 +28,9 @@ const getAllServices = catchAsync(async (req: Request, res: Response) => {
 
 // user update 
 const updateService = catchAsync(async (req, res) => {
-    const userId = req.params.userId;
+    const serviceId = req.params.userId;
     const data = req.body;
-    const result = await serviceService.updateService(userId, data);
+    const result = await serviceService.updateService(serviceId, data);
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         message: 'Service updated succesfully!',
@@ -38,8 +38,18 @@ const updateService = catchAsync(async (req, res) => {
     })
 });
 
+const deleteService = catchAsync(async (req, res) => {
+  const serviceId = req.params.userId
+  await serviceService.deleteService(serviceId)
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: 'Service deleted succesfully!',
+    data: {},
+  })
+})
 export const serviceController = {
     createService,
     getAllServices,
-    updateService
+    updateService,
+    deleteService
 }
