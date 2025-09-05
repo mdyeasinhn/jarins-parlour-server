@@ -1,8 +1,8 @@
-💇‍♀️ Parlor Management System
+# 💇‍♀️ Parlor Management System
 
 A secure full-stack web application for managing parlor services. It allows admins to add, update, delete, and organize services such as hair, skin, and nail treatments. The system is protected with JWT-based authentication to ensure only authorized users can manage services.
 
-🔑 Features
+## 🔑 Features
 
 🔐 Authentication & Authorization – Secure access with JWT.
 
@@ -20,7 +20,7 @@ A secure full-stack web application for managing parlor services. It allows admi
 
 🛡 Validation – Strong validation using Zod and Mongoose schema.
 
-🛠 Tech Stack
+## 🛠 Tech Stack
 
 Backend: Node.js, Express.js, MongoDB, Mongoose
 
@@ -29,3 +29,5 @@ Authentication: JWT (JSON Web Token)
 Validation: Zod
 
 Language: TypeScript
+
+## Project Setup
