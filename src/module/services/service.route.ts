@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { servicController } from "./service.controller";
 import validateRequest from "../../middleware/validateRequest";
 import { serviceValidation } from "./service.validation";
+import { serviceController } from "./service.controller";
 
 const serviceRoutes = Router();
 
-serviceRoutes.get("/", servicController.getAllServices);
+serviceRoutes.get("/", serviceController.getAllServices);
 
 serviceRoutes.post("/create-service",
     validateRequest(serviceValidation.createValidationSchema),
-    servicController.createService);
+    serviceController.createService);
 
 
 export default serviceRoutes;

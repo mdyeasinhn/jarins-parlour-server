@@ -3,7 +3,6 @@ import { TUser } from "./user.interface";
 import bcrypt from 'bcrypt'
 import config from "../../config";
 const userSchema = new Schema <TUser>({
-   
     name: {
         type: String,
         required: true,

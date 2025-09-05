@@ -1,7 +1,7 @@
 import z from "zod";
 
 const createValidationSchema = z.object({
-    body: z.object({
+
         title: z
             .string({ error: "Title is required." })
             .min(3, "Title must be at least 3 characters long."),
@@ -28,8 +28,8 @@ const createValidationSchema = z.object({
             .min(0, "Discount cannot be negative.")
             .max(100, "Discount cannot exceed 100%.")
             .optional(),
-    }),
-});
+    })
+
 
 export const serviceValidation = {
     createValidationSchema,

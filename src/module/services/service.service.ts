@@ -1,5 +1,6 @@
 import { IService } from "./service.interface";
-import { Service } from "./service.model";
+import Service from "./service.model";
+
 
 // Create a service 
 const createService = async (payload: IService) => {
