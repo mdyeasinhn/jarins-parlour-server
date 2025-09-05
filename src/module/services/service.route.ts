@@ -10,6 +10,9 @@ serviceRoutes.get("/", serviceController.getAllServices);
 serviceRoutes.post("/create-service",
     validateRequest(serviceValidation.createValidationSchema),
     serviceController.createService);
+    
+serviceRoutes.put("/:userId",
+    serviceController.updateService);
 
 
 export default serviceRoutes;
