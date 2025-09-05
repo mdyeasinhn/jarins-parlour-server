@@ -2,6 +2,8 @@ import { Router } from "express";
 import { userControllers } from "./user.controller";
 import validateRequest from "../../middleware/validateRequest";
 import { userValidation } from "./user.validation";
+import auth from "../../middleware/auth";
+import { USER_ROLE } from "./user.constant";
 
 const userRoutes = Router();
 //Get all users
@@ -14,7 +16,12 @@ userRoutes.get('/:email', userControllers.retrieveUserProfile);
 userRoutes.put('/:userId',
   validateRequest(userValidation.updateUserValidation),
   userControllers.updateUserInfo);
-userRoutes.patch('/block/:userId',  userControllers.blockUser);
+
+// Block user 
+userRoutes.patch('/block/:userId'
+  , auth(USER_ROLE.admin),
+  userControllers.blockUser);
+  
 //Create a user
 userRoutes.post(
   '/create-user',
