@@ -12,6 +12,7 @@ serviceRoutes.post("/create-service",
     serviceController.createService);
 
 serviceRoutes.put("/:serviceId",
+    validateRequest(serviceValidation.updateValidationSchema),
     serviceController.updateService);
 
 serviceRoutes.delete("/:serviceId",

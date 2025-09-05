@@ -28,7 +28,7 @@ const getAllServices = catchAsync(async (req: Request, res: Response) => {
 
 // user update 
 const updateService = catchAsync(async (req, res) => {
-    const serviceId = req.params.userId;
+    const serviceId = req.params.serviceId;
     const data = req.body;
     const result = await serviceService.updateService(serviceId, data);
     sendResponse(res, {

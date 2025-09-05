@@ -1,9 +1,7 @@
-import mongoose from "mongoose";
 import { IService } from "./service.interface";
 import Service from "./service.model";
 import AppError from "../../error/appError";
 import httpStatus from 'http-status-codes';
-
 
 // Create a service 
 const createService = async (payload: IService) => {
@@ -20,8 +18,8 @@ const getAllServices = async () => {
 // update service data
 const updateService = async (id: string, data: IService) => {
     const user = await Service.findOne({ _id: id });
-    if(!user) {
-      throw new  AppError(httpStatus.NOT_FOUND, "Service not found!")
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, "Service not found!")
     }
     const result = await Service.findOneAndUpdate({ _id: id }, data,
         { new: true, runValidators: true });
@@ -30,8 +28,8 @@ const updateService = async (id: string, data: IService) => {
 
 const deleteService = async (id: string) => {
     const user = await Service.findOne({ _id: id });
-    if(!user) {
-      throw new  AppError(httpStatus.NOT_FOUND, "Service not found!")
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, "Service not found!")
     }
     const result = Service.deleteOne({ _id: id });
     return result
