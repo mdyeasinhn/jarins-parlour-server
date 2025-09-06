@@ -6,12 +6,12 @@ import { StatusCodes } from "http-status-codes";
 
 // Create a review 
 const createReview = catchAsync(async (req: Request, res: Response) => {
-    const userId = req.user.id;
-    const { serviceId, rating, comment } = req.body;
+    const user = req.user.id;
+    const { service, rating, comment } = req.body;
 
     const result = await reviewService.createReview({
-        userId,
-        serviceId,
+        user,
+        service,
         rating,
         comment,
     });

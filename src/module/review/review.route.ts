@@ -5,6 +5,6 @@ import { USER_ROLE } from "../user/user.constant";
 
 const reviewRoutes = Router();
 
-reviewRoutes.post("/create-review", auth(USER_ROLE.customer), reviewController.createReview);
+reviewRoutes.post("/create-review", auth(USER_ROLE.admin), reviewController.createReview);
 
 export default reviewRoutes;

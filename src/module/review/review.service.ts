@@ -7,15 +7,15 @@ import Service from "../services/service.model";
 
 // Create a review 
 const createReview = async (payload: IReview) => {
-    const { userId, serviceId } = payload;
+    const { user,  service } = payload;
 
     // check if user exists
-    const userExists = await User.findById(userId);
+    const userExists = await User.findById(user);
     if (!userExists) {
         throw new AppError(StatusCodes.NOT_FOUND, "User not found!");
     };
     // check if service exists
-    const serviceExists = await Service.findById(serviceId);
+    const serviceExists = await Service.findById(service);
     if (!serviceExists) {
         throw new AppError(StatusCodes.NOT_FOUND, "Service not found!");
     };
@@ -24,8 +24,8 @@ const createReview = async (payload: IReview) => {
 
     // populate before returning
     const result = await Review.findById(review._id)
-        .populate("userId", "name email")      
-        .populate("serviceId", "title category price");
+        .populate("user", "name email")
+        .populate("service", "title category price");
     return result;
 };
 

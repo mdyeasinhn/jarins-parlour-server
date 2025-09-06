@@ -3,12 +3,12 @@ import { IReview } from "./review.interface";
 
 const reviewSchema = new Schema<IReview>(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",      // Reference to User collection
       required: true,
     },
-    serviceId: {
+    service: {
       type: Schema.Types.ObjectId,
       ref: "Service",   // Reference to Service collection
       required: true,
