@@ -22,12 +22,18 @@ const crateUserValidationSchema = z.object({
 
 // ✅ Update schema (all fields optional)
 const updateUserValidation = z.object({
-    name: z.string().min(2, "Name must be at least 2 characters long").optional(),
-    password: z.string().min(6, "Password must be at least 6 characters long").optional(),
-    phone: z.string().regex(/^[0-9]{10,15}$/, "Phone must be 10–15 digits").optional(),
-    photo: z.string().url("Photo must be a valid URL").optional(),
+    email: z.string().optional().refine((val) => val === undefined, {
+        message: "You are not allowed to update the email address.",
+    }),
 
-    email: z.string().max(0, "Email cannot be updated").optional(),
+    role: z.string().optional().refine((val) => val === undefined, {
+        message: "You cannot change your role — contact an administrator.",
+    }),
+    name: z.string().min(2, "Name must be at least 2 characters long.").optional(),
+    password: z.string().min(6, "Password must be at least 6 characters long.").optional(),
+    phone: z.string().regex(/^[0-9]{10,15}$/, "Phone must be 10–15 digits.").optional(),
+    photo: z.string().url("Photo must be a valid URL.").optional(),
+
 });
 
 export const userValidation = {
