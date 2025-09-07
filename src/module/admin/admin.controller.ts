@@ -8,11 +8,34 @@ const adminStats = catchAsync(async (req: Request, res: Response) => {
     const result = await adminService.adminStats();
     sendResponse(res, {
         statusCode: StatusCodes.OK,
-        message: "Admin statistics retrieved successfully.",
+        message: "System statistics retrieved successfully.",
         data: result,
     });
 });
 
+const manageUserByAdmin = catchAsync(async (req, res) => {
+    const userId = req.params.userId;
+    await adminService.manageUserByAdmin(userId, req.body);
+
+    let message = "User updated seccessfully.";
+
+    if (req.body.status) {
+        message = `User status update "${req.body.status}" successfully`;
+    } else if (req.body.role) {
+        message = `User role update "${req.body.role}" successfully`;
+    } else if (req.body.isDeleted !== undefined) {
+        message = req.body.isDeleted
+            ? "User deleted successfully"
+            : "User restored successfully";
+    }
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message
+    })
+});
+
 export const adminController = {
-    adminStats
+    adminStats,
+    manageUserByAdmin
 }

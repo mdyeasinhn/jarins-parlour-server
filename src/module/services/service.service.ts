@@ -27,8 +27,8 @@ const updateService = async (id: string, data: IService) => {
 };
 
 const deleteService = async (id: string) => {
-    const user = await Service.findOne({ _id: id });
-    if (!user) {
+    const service = await Service.findOne({ _id: id });
+    if (!service) {
         throw new AppError(httpStatus.NOT_FOUND, "Service not found!")
     }
     const result = Service.deleteOne({ _id: id });

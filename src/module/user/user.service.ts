@@ -33,34 +33,13 @@ const updateUserInfo = async (id: string, data: TUser) => {
   })
   return result
 }
-// inACTIVE & block user
-const blockUser = async (userId: string) => {
-  // Check if the provided ID is a valid MongoDB ObjectId
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
-    throw new AppError(httpStatus.BAD_REQUEST, "Invalid user ID!");
-  }
-  const user = await User.findById(userId);
-
-  if (!user) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'User not found!');
-  }
-
-  if (user.status == "BLOCKED") {
-    throw new Error('User is already BLOCKED!');
-  }
-
-  user.status = "BLOCKED";
-  await user.save();
-
-  return user
-}
 
 export const userServices = {
   createUser,
   getUsers,
   retrieveUserProfile,
   updateUserInfo,
-  blockUser,
+
   //   getSingleUser,
   //   deleteUser,
 }

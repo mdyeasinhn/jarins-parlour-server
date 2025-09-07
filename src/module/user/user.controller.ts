@@ -48,22 +48,11 @@ const updateUserInfo = catchAsync(async (req, res) => {
   })
 });
 
-// inACTIVE & block user
-const blockUser = catchAsync(async (req, res) => {
-  const userId = req.params.userId;
-  await userServices.blockUser(userId);
 
-  sendResponse(res, {
-    success: true,
-    statusCode: StatusCodes.OK,
-    message: 'User BLOCKED successfully',
-  })
-});
 
 export const userControllers = {
   createUser,
   getUsers,
   retrieveUserProfile,
   updateUserInfo,
-  blockUser
 }
