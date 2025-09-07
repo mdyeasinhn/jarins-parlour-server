@@ -7,7 +7,7 @@ import Service from "../services/service.model";
 
 // Create a review 
 const createReview = async (payload: IReview) => {
-    const { user,  service } = payload;
+    const { user, service } = payload;
 
     // check if user exists
     const userExists = await User.findById(user);
@@ -29,6 +29,12 @@ const createReview = async (payload: IReview) => {
     return result;
 };
 
+// Get ALL REVIEWS
+const getAllReviews = async () => {
+    const result = await Review.find();
+    return result
+}
 export const reviewService = {
     createReview,
+    getAllReviews
 } 
