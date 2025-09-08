@@ -6,6 +6,6 @@ export interface IReview {
     user: ObjectId;
     service: ObjectId;
     rating: number;
-    comment: string;
+    comment?: string;
     createdAt?: Date;
 }
