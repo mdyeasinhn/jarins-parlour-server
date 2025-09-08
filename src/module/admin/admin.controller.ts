@@ -4,6 +4,7 @@ import { adminService } from "./admin.service";
 import sendResponse from "../../utils/sendResponse";
 import { StatusCodes } from "http-status-codes";
 
+//Dashboard statistics
 const adminStats = catchAsync(async (req: Request, res: Response) => {
     const result = await adminService.adminStats();
     sendResponse(res, {
@@ -13,6 +14,7 @@ const adminStats = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+// Manage user 
 const manageUserByAdmin = catchAsync(async (req, res) => {
     const userId = req.params.userId;
     await adminService.manageUserByAdmin(userId, req.body);

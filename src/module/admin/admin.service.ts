@@ -5,6 +5,7 @@ import Service from "../services/service.model";
 import User from "../user/user.model"
 import { TUser } from "../user/user.interface";
 
+//Dashboard statistics
 const adminStats = async () => {
     const totalUsers = await User.countDocuments();
     const totalReviews = await Review.countDocuments();
@@ -19,7 +20,7 @@ const adminStats = async () => {
         totalServices,
     };
 };
-// inACTIVE & block user
+// Manage user 
 const manageUserByAdmin = async (userId: string, payload: Partial<TUser>) => {
 
     const user = await User.findById({ _id: userId });
